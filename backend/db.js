@@ -8,4 +8,4 @@ const connectDB = async () => {
   }
 };
 module.exports = connectDB;
-//different code from youtube due to updation issue
+

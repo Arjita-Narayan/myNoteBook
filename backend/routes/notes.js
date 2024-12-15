@@ -53,7 +53,7 @@ router.post(
 //ROUTE3:Update an existing note using:PUT "/api/notes/updatenote".login required.
 
 router.put("/updatenote/:id", fetchuser, async (req, res) => {
-  //requesting them from body by destructering method
+
   const { title, description, tag } = req.body;
   try {
     //create a newNote object
@@ -94,7 +94,7 @@ router.put("/updatenote/:id", fetchuser, async (req, res) => {
 
 router.delete("/deletenote/:id", fetchuser, async (req, res) => {
   try {
-    //find the note to be deleted and update it
+    //find the note to be deleted and delete it
     let note = await Note.findById(req.params.id);
     if (!note) {
       return res.status(404).send("Not Found");

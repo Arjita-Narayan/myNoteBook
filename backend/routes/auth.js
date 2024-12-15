@@ -5,12 +5,19 @@ const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
 var fetchuser = require("../middleware/fetchuser");
+//require('dotenv').config();
+//require('dotenv').config({ path: './backend/.env' });
+
+
 
 const JWT_SECRET = "Harryisagoodb$oy";
+//const JWT_SECRET = process.env.JWT_SECRET;
+
 
 //ROUTE1:Create a user using:POST "/api/auth/createuser".No login required
 router.post(
   "/createuser",
+  //validation below using express-validator
   [
     body("name", "Enter a valid name").isLength({ min: 3 }),
     body("email", "Enter a valid email").isEmail(),
