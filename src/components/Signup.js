@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 const Signup = (props) => {
   const [credentials, setCredentials] = useState({
     name: "",
@@ -7,11 +8,12 @@ const Signup = (props) => {
     password: "",
     cpassword: "",
   });
+
   let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, email, password } = credentials;
+    //const { name, email, password } = credentials;
 
     const response = await fetch("http://localhost:5001/api/auth/createuser", {
       method: "POST",
@@ -19,19 +21,18 @@ const Signup = (props) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name,
-        email,
-        password,
+        name:credentials.name,
+        email:credentials.email,
+        password:credentials.password,
       }),
     });
     const json = await response.json();
-    console.log(json);
 
     if (json.success) {
-      //save the auth token and redirectredirect
+      //save the auth token and redirect
       localStorage.setItem("token", json.authtoken);
-      navigate("/");
       props.showAlert("Account created successfully!", "success");
+      navigate("/");
     } else {
       props.showAlert("Invalid credentials", "danger");
     }
@@ -40,11 +41,12 @@ const Signup = (props) => {
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
+
   return (
-    <div className="container mt-2">
-      <h2 className="my-3">Create An Account to Use myNotebook</h2>
+    <div className="mt-3">
+      <h2>Create an Account to myNotebook</h2>
       <form onSubmit={handleSubmit}>
-        <div className="my-3">
+        <div className="mb-3">
           <label htmlFor="name" className="form-label">
             Name
           </label>
@@ -53,13 +55,13 @@ const Signup = (props) => {
             className="form-control"
             id="name"
             name="name"
-            onChange={onChange}
+            value={credentials.name} 
+            onChange={onChange} 
             aria-describedby="emailHelp"
           />
         </div>
-
         <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
+          <label htmlFor="email" className="form-label">
             Email address
           </label>
           <input
@@ -67,11 +69,10 @@ const Signup = (props) => {
             className="form-control"
             id="email"
             name="email"
-            onChange={onChange}
-            aria-describedby="emailHelp"
+            value={credentials.email} // Controlled component
+            onChange={onChange} 
           />
         </div>
-
         <div className="mb-3">
           <label htmlFor="password" className="form-label">
             Password
@@ -81,9 +82,8 @@ const Signup = (props) => {
             className="form-control"
             id="password"
             name="password"
-            onChange={onChange}
-            minLength={5}
-            required
+            value={credentials.password} // Controlled component
+            onChange={onChange} 
           />
         </div>
         <div className="mb-3">
@@ -95,12 +95,10 @@ const Signup = (props) => {
             className="form-control"
             id="cpassword"
             name="cpassword"
-            onChange={onChange}
-            minLength={5}
-            required
+            value={credentials.cpassword} // Controlled component
+            onChange={onChange} 
           />
         </div>
-
         <button type="submit" className="btn btn-primary">
           Submit
         </button>

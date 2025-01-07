@@ -5,13 +5,14 @@ const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
 var fetchuser = require("../middleware/fetchuser");
-//require('dotenv').config();
+require('dotenv').config();
 //require('dotenv').config({ path: './backend/.env' });
 
 
 
-const JWT_SECRET = "Harryisagoodb$oy";
-//const JWT_SECRET = process.env.JWT_SECRET;
+
+//const JWT_SECRET = "Harryisagoodb$oy";
+const JWT_SECRET = process.env.JWT_SECRET;
 
 
 //ROUTE1:Create a user using:POST "/api/auth/createuser".No login required
@@ -21,7 +22,6 @@ router.post(
   [
     body("name", "Enter a valid name").isLength({ min: 3 }),
     body("email", "Enter a valid email").isEmail(),
-
     body("password", "Password must be atleast 5 characters").isLength({
       min: 5,
     }),
@@ -80,6 +80,7 @@ router.post(
       //   );
     } catch (error) {
       console.error(error.message);
+      console.log(error);
       res.status(500).send("Internal Server error");
     }
   }
@@ -120,11 +121,13 @@ router.post(
           id: user.id,
         },
       };
+      //console.log(JWT_SECRET);
       const authtoken = jwt.sign(data, JWT_SECRET);
       success = true;
       res.json({ authtoken, success });
     } catch (error) {
       console.error(error.message);
+      console.log(error);
       res.status(500).send("Internal Server error");
     }
   }
@@ -132,14 +135,14 @@ router.post(
 
 //ROUTE3:Get loggedin user details using:POST "/api/auth/getuser".login required
 
-router.post("/getuser", fetchuser, async (req, res) => {
-  try {
-    userId = req.user.id;
-    const user = await User.findById(userId).select("-password");
-    res.send(user);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send("Internal Server error");
-  }
-});
+// router.post("/getuser", fetchuser, async (req, res) => {
+//   try {
+//     userId = req.user.id;
+//     const user = await User.findById(userId).select("-password");
+//     res.send(user);
+//   } catch (error) {
+//     console.error(error.message);
+//     res.status(500).send("Internal Server error");
+//   }
+// });
 module.exports = router;

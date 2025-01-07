@@ -1,7 +1,10 @@
+import React,{useNavigate } from "react-router-dom";
 import { useState } from "react";
 import NoteContext from "./noteContext";
 
+
 const NoteState = (props) => {
+  
   const host = "http://localhost:5001";
   // const notesInitial = [
   //   {
@@ -27,11 +30,12 @@ const NoteState = (props) => {
 
   // const [notes, setNotes] = useState(notesInitial);
   const [notes, setNotes] = useState([]);
+  let navigate = useNavigate();
 
   //Get all notes
   const getNotes = async () => {
+    
     //API call
-
     const response = await fetch(`${host}/api/notes/fetchallnotes`, {
       method: "GET",
       headers: {
@@ -40,6 +44,13 @@ const NoteState = (props) => {
       },
     });
     const json = await response.json();
+    console.log(json.error);
+    if (json.error) {
+      console.error("Error:", json.error); // Log the error for debugging
+      navigate('/login'); // Redirect to the login page
+      return; // Exit function
+    }
+  
     setNotes(json);
   };
 

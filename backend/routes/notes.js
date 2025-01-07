@@ -8,7 +8,6 @@ const { body, validationResult } = require("express-validator");
 router.get("/fetchallnotes", fetchuser, async (req, res) => {
   try {
     const notes = await Note.find({ user: req.user.id });
-
     res.json(notes);
   } catch (error) {
     console.error(error.message);
@@ -41,7 +40,6 @@ router.post(
         user: req.user.id,
       });
       const savedNote = await note.save();
-
       res.json(savedNote);
     } catch (error) {
       console.error(error.message);

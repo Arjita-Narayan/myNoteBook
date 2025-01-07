@@ -5,11 +5,14 @@ import AddNote from "./AddNote";
 import { useNavigate } from "react-router-dom";
 
 const Notes = (props) => {
-  const context = useContext(noteContext);
 
+  const context = useContext(noteContext);
   const { notes, getNotes, editNote } = context;
+
   let navigate = useNavigate();
+
   useEffect(() => {
+    console.log(localStorage.getItem("token"));
     if (localStorage.getItem("token")) {
       getNotes();
     } else {
@@ -20,6 +23,7 @@ const Notes = (props) => {
 
   const ref = useRef(null);
   const refClose = useRef(null);
+  
   const [note, setNote] = useState({
     id: "",
     etitle: "",
@@ -52,6 +56,7 @@ const Notes = (props) => {
   return (
     <>
       <AddNote showAlert={props.showAlert} />
+
       <button
         ref={ref}
         type="button"

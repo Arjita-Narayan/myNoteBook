@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const Login = (props) => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
+
   let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -18,9 +19,9 @@ const Login = (props) => {
         password: credentials.password,
       }),
     });
-    console.log(response);
+    //console.log(response);
     const json = await response.json();
-    console.log(json);
+    //console.log(json);
 
     if (json.success) {
       //save the auth token and redirectredirect

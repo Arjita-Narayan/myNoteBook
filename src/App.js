@@ -22,8 +22,8 @@ function App() {
   };
   return (
     <>
-      <NoteState>
         <BrowserRouter>
+      <NoteState>
           <Navbar />
           <Alert alert={alert} />
           <div className="container">
@@ -37,8 +37,8 @@ function App() {
               />
             </Routes>
           </div>
-        </BrowserRouter>
       </NoteState>
+        </BrowserRouter>
     </>
   );
 }
